@@ -50,10 +50,9 @@ DROP POLICY IF EXISTS "it_roles_full_access" ON system_tiers;
 DROP POLICY IF EXISTS "it_roles_full_access" ON app_roles;
 DROP POLICY IF EXISTS "it_roles_full_access" ON user_app_roles;
 DROP POLICY IF EXISTS "admin_full_access" ON user_app_roles;
-DROP POLICY IF EXISTS "it_roles_full_access" ON auth.users;
-DROP POLICY IF EXISTS "users_own_profile" ON auth.users;
+-- (auth schema managed by Supabase, skipping auth.users policies)
 
-ALTER TABLE user_app_roles     DROP POLICY IF EXISTS "admin_full_access" ON user_app_roles;
+DROP POLICY IF EXISTS "admin_full_access" ON user_app_roles;
 
 DROP INDEX IF EXISTS idx_cr_status;
 DROP INDEX IF EXISTS idx_cr_applicant;
@@ -108,7 +107,7 @@ DROP TABLE IF EXISTS app_roles;
 -- The base table already exists; we add our extension as a joined profile table.
 
 -- Extension: user profile data (joined to auth.users)
-CREATE TABLE auth.user_profiles (
+CREATE TABLE public.user_profiles (
     id              uuid primary key references auth.users(id) on delete cascade,
     display_name    text not null,
     ldap_dn         text,                          -- for admin accounts via LDAP
@@ -132,7 +131,7 @@ CREATE TABLE app_roles (
 -- user_app_roles: per-user effective roles (many-to-many)
 CREATE TABLE user_app_roles (
     id          uuid primary key default gen_random_uuid(),
-    user_id     uuid references auth.users(id) on delete cascade,
+    user_id     uuid,
     role_id     integer references app_roles(id) on delete cascade,
     created_at  timestamptz default now(),
     unique (user_id, role_id)
@@ -183,8 +182,8 @@ CREATE TABLE change_requests (
     cr_type_id              integer references cr_types(id),
     title                   text not null,
     description             text not null,
-    applicant_id            uuid references auth.users(id),
-    applicant_supervisor_id uuid references auth.users(id),
+    applicant_id            uuid,
+    applicant_supervisor_id uuid,
 
     -- Classification
     system_tier_id          integer references system_tiers(id),
@@ -294,11 +293,11 @@ CREATE TABLE cr_uat_results (
 CREATE TABLE cr_deployment_record (
     id                  uuid primary key default gen_random_uuid(),
     cr_id               uuid references change_requests(id) on delete cascade,
-    deployed_by         uuid references auth.users(id),
+    deployed_by         uuid,
     deployed_at         timestamptz,
     deployment_notes    text,
-    check_by_1          uuid references auth.users(id),
-    check_by_2          uuid references auth.users(id),
+    check_by_1          uuid,
+    check_by_2          uuid,
     check_completed_at  timestamptz,
     created_at          timestamptz default now(),
     unique (cr_id)
@@ -312,7 +311,7 @@ CREATE TABLE cr_deployment_record (
 CREATE TABLE cr_chat_messages (
     id              uuid primary key default gen_random_uuid(),
     cr_id           uuid references change_requests(id) on delete cascade,
-    sender_id       uuid references auth.users(id),
+    sender_id       uuid,
     body            text not null,
     mentions        text[],
     created_at      timestamptz default now()
@@ -455,7 +454,7 @@ begin
 
     select up.display_name into v_sender_name
     from auth.users u
-    join auth.user_profiles up on up.id = u.id
+    join public.user_profiles up on up.id = u.id
     where u.id = new.sender_id;
 
     -- Process mentions from the mentions array
@@ -524,7 +523,7 @@ CREATE TRIGGER trg_notify_on_chat_message
 -- ============================================================
 
 -- Enable RLS on all application tables
-alter table auth.user_profiles    enable row level security;
+alter table public.user_profiles    enable row level security;
 alter table app_roles            enable row level security;
 alter table user_app_roles        enable row level security;
 alter table cr_types             enable row level security;
@@ -548,11 +547,11 @@ alter table cr_audit_log         enable row level security;
 -- ============================================================
 
 -- =============================================
--- auth.user_profiles
+-- public.user_profiles
 -- =============================================
 -- IT roles + admin can view all profiles
 create policy "it_roles_view_profiles"
-    on auth.user_profiles for select
+    on public.user_profiles for select
     using (
         exists (
             select 1 from user_app_roles uar
@@ -564,12 +563,12 @@ create policy "it_roles_view_profiles"
 
 -- Users can view their own profile
 create policy "users_own_profile"
-    on auth.user_profiles for select
+    on public.user_profiles for select
     using (id = auth.uid());
 
 -- Admin can update any profile
 create policy "admin_update_profiles"
-    on auth.user_profiles for update
+    on public.user_profiles for update
     using (
         exists (
             select 1 from user_app_roles uar
@@ -1085,7 +1084,7 @@ insert into workflow_steps (cr_type_id, step_order, step_key, step_label, can_sk
 -- After running this migration:
 -- 1. Supabase Auth is auto-configured; auth.users table is managed by Supabase
 -- 2. SSO login will insert into auth.users automatically
--- 3. Create a trigger on auth.users AFTER INSERT to also insert auth.user_profiles
+-- 3. Create a trigger on auth.users AFTER INSERT to also insert public.user_profiles
 -- 4. Edge Functions (submit-cr, approve-cr, reject-cr, advance-cr) use next_cr_number()
 -- 5. Edge Functions use notify_users() to batch-insert notifications
 -- 6. Edge Functions use get_approval_routing() to determine approval path
