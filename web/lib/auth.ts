@@ -1,5 +1,10 @@
 import type { SupabaseClient, User as SupabaseUser } from '@supabase/supabase-js'
 import type { UserProfile, AppRole } from './types'
+import { IT_ROLE_NAMES, isITStaff, isAdmin } from './rbac'
+
+// Re-export rbac helpers for consumers of auth.ts
+export { isITStaff, isAdmin } from './rbac'
+export { IT_ROLE_NAMES } from './rbac'
 
 export interface Session {
   user: SupabaseUser
@@ -8,12 +13,13 @@ export interface Session {
 }
 
 export async function getSession(supabase: SupabaseClient): Promise<Session | null> {
-  const { data: { user }, error } = await supabase.auth.getUser()
-  if (error || !user) return null
+  const { data, error } = await supabase.auth.getSession()
+  if (error || !data.session) return null
+  const user = data.session.user
 
   const [profileResult, rolesResult] = await Promise.all([
     supabase
-      .from('auth.user_profiles')
+      .from('public.user_profiles')
       .select('*')
       .eq('id', user.id)
       .single(),
@@ -63,9 +69,7 @@ export function isITRole(roles: AppRole[]): boolean {
   return hasAnyRole(roles, IT_ROLE_NAMES)
 }
 
-export function isAdmin(roles: AppRole[]): boolean {
-  return hasRole(roles, 'admin')
-}
+
 
 export async function isAuthenticated(supabase: SupabaseClient): Promise<boolean> {
   const { data: { user } } = await supabase.auth.getUser()
@@ -81,7 +85,7 @@ export async function getUserDisplayName(
   userId: string
 ): Promise<string> {
   const { data } = await supabase
-    .from('auth.user_profiles')
+    .from('public.user_profiles')
     .select('display_name')
     .eq('id', userId)
     .single()

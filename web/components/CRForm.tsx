@@ -70,11 +70,18 @@ export default function CRForm({ onSuccess, onError }: CRFormProps) {
         .select('id')
         .single()
 
-      if (crErr || !crData) throw new Error(crErr?.message ?? 'Failed to create CR')
+      if (crErr) {
+        console.error('[CRForm] insert error:', crErr)
+        throw new Error(crErr.message ?? 'Failed to create CR')
+      }
+      if (!crData) throw new Error('No data returned from insert')
 
       onSuccess(crData.id)
     } catch (err: unknown) {
-      onError(err instanceof Error ? err.message : 'Failed to submit CR')
+      console.error('[CRForm] submit error:', err)
+      const msg = err instanceof Error ? err.message : 'Failed to submit CR'
+      setErrors({ form: msg })
+      onError(msg)
     } finally {
       setLoading(false)
     }

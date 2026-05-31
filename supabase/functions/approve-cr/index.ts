@@ -69,6 +69,14 @@ serve(async (req) => {
 
     // Get current approvals array
     const currentApprovals = Array.isArray(cr.approvals) ? cr.approvals : []
+
+    // R3: Guard against duplicate approvals — same user cannot approve same step twice
+    const alreadyApproved = currentApprovals.some(
+      (a: { step_key: string; approved_by: string }) =>
+        a.step_key === currentStep && a.approved_by === user.id
+    )
+    if (alreadyApproved) throw new Error('You have already approved this step')
+
     currentApprovals.push(approvalEntry)
 
     // Determine next step based on routing logic

@@ -17,6 +17,10 @@ function createMockSupabaseClient(options: {
         data: { user: options.user ?? null },
         error: options.getUserError ?? null,
       }),
+      getSession: vi.fn().mockResolvedValue({
+        data: { session: options.user ? { user: options.user } : null },
+        error: options.getUserError ?? null,
+      }),
     },
     from: vi.fn().mockReturnValue({
       select: vi.fn().mockReturnValue({

@@ -21,9 +21,17 @@ const LoginPage: NextPage = () => {
   const [error, setError] = useState('')
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data }: { data: { user: unknown } }) => {
-      if (data.user) router.replace('/')
-    })
+    // Check localStorage directly (bypasses getUser() network call that fails in HMR)
+    const storedUser = localStorage.getItem('itcrms_user')
+    if (storedUser) {
+      router.replace('/')
+      return
+    }
+    // Also check Supabase's own localStorage key for refresh flow
+    const raw = localStorage.getItem('sb-fkacjlozwittzulmbapc-auth-token')
+    if (raw) {
+      try { JSON.parse(raw); router.replace('/'); return } catch {}
+    }
   }, [])
 
   async function handleSSOLogin() {
@@ -40,14 +48,33 @@ const LoginPage: NextPage = () => {
   }
 
   async function handleLocalLogin(e: React.FormEvent) {
+    console.log('[ITCRMS] handleLocalLogin called', { email, password, loading })
     e.preventDefault()
     setLoading(true)
     setError('')
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
+
+    console.log('[ITCRMS] calling signInWithPassword...')
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+    console.log('[ITCRMS] signInWithPassword result', { data, error })
     if (error) {
+      console.error('[ITCRMS] signInWithPassword error:', error)
       setError(error.message)
       setLoading(false)
     } else {
+      console.log('[ITCRMS] login success, data contains user:', !!data?.user, 'session:', !!data?.session)
+      // Store in localStorage so _app.tsx can recover session after navigation
+      if (data?.session) {
+        localStorage.setItem('itcrms_session', JSON.stringify(data.session))
+        // Also write Supabase's own localStorage token so getSession() (used by
+        // _app.tsx after navigation) can read it without making a network request.
+        const { user: _u, ...sessionWithoutUser } = data.session
+        const encoded = btoa(JSON.stringify(sessionWithoutUser))
+          .replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '')
+        localStorage.setItem('sb-fkacjlozwittzulmbapc-auth-token', encoded)
+      }
+      if (data?.user) {
+        localStorage.setItem('itcrms_user', JSON.stringify(data.user))
+      }
       router.push('/')
     }
   }

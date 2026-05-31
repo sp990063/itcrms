@@ -112,21 +112,34 @@ describe('rbac module', () => {
       expect(result).toBe(true)
     })
 
-    it('IT staff can edit assigned CRs in non-draft status', () => {
+    it('IT staff can edit their own draft CRs', () => {
       const roles = createRoles('it_staff')
       const cr = createMockCR({
-        applicant_id: 'user-1',
-        status: 'pending_it_impact',
+        applicant_id: 'it-staff-1', // same user → own draft CR
+        status: 'draft',
       })
       expect(canEditCR(roles, cr, 'it-staff-1')).toBe(true)
     })
 
-    it('IT supervisor can edit any CR', () => {
-      const roles = createRoles('it_supervisor')
+    it('IT staff cannot edit others\' non-draft CRs', () => {
+      const roles = createRoles('it_staff')
+      const cr = createMockCR({
+        applicant_id: 'user-1', // different user
+        status: 'pending_it_impact',
+      })
+      // New secure policy: IT staff can only edit their own draft CRs
+      expect(canEditCR(roles, cr, 'it-staff-1')).toBe(false)
+    })
+
+    it('IT supervisor can edit any non-draft CR (acting as admin)', () => {
+      const roles = createRoles('it_supervisor', 'admin')
       const cr = createMockCR({
         applicant_id: 'user-1',
         status: 'pending_it_supervisor',
       })
+      // it_supervisor without admin role cannot edit non-draft
+      expect(canEditCR(createRoles('it_supervisor'), cr, 'sup-1')).toBe(false)
+      // it_supervisor WITH admin role CAN edit any non-draft
       expect(canEditCR(roles, cr, 'sup-1')).toBe(true)
     })
   })

@@ -115,6 +115,27 @@ const CRDetailPage: NextPage = () => {
         .eq('id', id as string)
         .single()
       setCr(updated as unknown as ChangeRequest)
+
+      // Reload steps + current step
+      if (updated) {
+        const { data: stepsData } = await supabase
+          .from('workflow_steps')
+          .select('*')
+          .eq('cr_type_id', (updated as any).cr_type_id)
+          .order('step_order')
+        setSteps(stepsData ?? [])
+        const refreshed = (stepsData ?? []).find((s: WorkflowStep) => s.step_order === (updated as any).current_step_order)
+        setCurrentStep(refreshed ?? null)
+
+        // Reload audit log
+        const { data: auditData } = await supabase
+          .from('cr_audit_log')
+          .select('*, user:auth.users(id, email)')
+          .eq('cr_id', id as string)
+          .order('created_at', { ascending: true })
+        setAuditLog(auditData as AuditLogEntry[] ?? [])
+      }
+
       setDialogMode(null)
     } catch (e: unknown) {
       alert(e instanceof Error ? e.message : 'Failed to approve')
@@ -144,6 +165,27 @@ const CRDetailPage: NextPage = () => {
         .eq('id', id as string)
         .single()
       setCr(updated as unknown as ChangeRequest)
+
+      // Reload steps + current step
+      if (updated) {
+        const { data: stepsData } = await supabase
+          .from('workflow_steps')
+          .select('*')
+          .eq('cr_type_id', (updated as any).cr_type_id)
+          .order('step_order')
+        setSteps(stepsData ?? [])
+        const refreshed = (stepsData ?? []).find((s: WorkflowStep) => s.step_order === (updated as any).current_step_order)
+        setCurrentStep(refreshed ?? null)
+
+        // Reload audit log
+        const { data: auditData } = await supabase
+          .from('cr_audit_log')
+          .select('*, user:auth.users(id, email)')
+          .eq('cr_id', id as string)
+          .order('created_at', { ascending: true })
+        setAuditLog(auditData as AuditLogEntry[] ?? [])
+      }
+
       setDialogMode(null)
     } catch (e: unknown) {
       alert(e instanceof Error ? e.message : 'Failed to reject')
@@ -172,6 +214,26 @@ const CRDetailPage: NextPage = () => {
         .eq('id', id as string)
         .single()
       setCr(updated as unknown as ChangeRequest)
+
+      // Reload steps + current step
+      if (updated) {
+        const { data: stepsData } = await supabase
+          .from('workflow_steps')
+          .select('*')
+          .eq('cr_type_id', (updated as any).cr_type_id)
+          .order('step_order')
+        setSteps(stepsData ?? [])
+        const refreshed = (stepsData ?? []).find((s: WorkflowStep) => s.step_order === (updated as any).current_step_order)
+        setCurrentStep(refreshed ?? null)
+
+        // Reload audit log
+        const { data: auditData } = await supabase
+          .from('cr_audit_log')
+          .select('*, user:auth.users(id, email)')
+          .eq('cr_id', id as string)
+          .order('created_at', { ascending: true })
+        setAuditLog(auditData as AuditLogEntry[] ?? [])
+      }
     } catch (e: unknown) {
       alert(e instanceof Error ? e.message : 'Failed to advance')
     } finally {
@@ -200,6 +262,26 @@ const CRDetailPage: NextPage = () => {
         .eq('id', id as string)
         .single()
       setCr(updated as unknown as ChangeRequest)
+
+      // Reload steps + current step
+      if (updated) {
+        const { data: stepsData } = await supabase
+          .from('workflow_steps')
+          .select('*')
+          .eq('cr_type_id', (updated as any).cr_type_id)
+          .order('step_order')
+        setSteps(stepsData ?? [])
+        const refreshed = (stepsData ?? []).find((s: WorkflowStep) => s.step_order === (updated as any).current_step_order)
+        setCurrentStep(refreshed ?? null)
+
+        // Reload audit log
+        const { data: auditData } = await supabase
+          .from('cr_audit_log')
+          .select('*, user:auth.users(id, email)')
+          .eq('cr_id', id as string)
+          .order('created_at', { ascending: true })
+        setAuditLog(auditData as AuditLogEntry[] ?? [])
+      }
     } catch (e: unknown) {
       alert(e instanceof Error ? e.message : 'Failed to submit to committee')
     } finally {

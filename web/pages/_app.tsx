@@ -21,21 +21,64 @@ export default function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     async function loadUser() {
-      const session = await getSession(supabase)
-      if (session) {
+      console.log('[ITCRMS] loadUser starting...')
+      try {
+        // 1. localStorage recovery (set by login.tsx before navigation)
+        const storedSessionRaw = localStorage.getItem('itcrms_session')
+        const storedUserRaw = localStorage.getItem('itcrms_user')
+        if (storedSessionRaw && storedUserRaw) {
+          console.log('[ITCRMS] recovered session from localStorage')
+          const storedUser = JSON.parse(storedUserRaw)
+          setUser(storedUser)
+          // Fetch roles from DB while localStorage still has the session
+          // (getSession() reads from localStorage — must NOT remove items before this call)
+          try {
+            const s = await getSession(supabase)
+            setRoles(s?.roles ?? [])
+          } catch (err) {
+            console.error('[ITCRMS] loadUser roles error:', err)
+            setRoles([])
+          } finally {
+            // Clean up temp localStorage after roles are fetched
+            // Note: we intentionally do NOT remove itcrms_session here — it is
+            // needed by getSession() called from onAuthStateChange below.
+            // Only remove the user key; session stays as fallback for getSession().
+            localStorage.removeItem('itcrms_user')
+          }
+          return
+        }
+
+        // 2. Normal getSession (page refresh flow — reads localStorage via Supabase)
+        const session = await getSession(supabase)
+        console.log('[ITCRMS] getSession result:', { session: !!session, roles: session?.roles?.length })
+        if (!session) {
+          console.log('[ITCRMS] no session found, setting null')
+          setUser(null)
+          setRoles([])
+          return
+        }
         setUser(session.user)
         setRoles(session.roles)
+      } catch (err) {
+        console.error('[ITCRMS] loadUser error:', err)
+        setUser(null)
+        setRoles([])
+      } finally {
+        console.log('[ITCRMS] loadUser finished, setting loading=false')
+        setLoading(false)
       }
-      setLoading(false)
     }
     loadUser()
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === 'SIGNED_IN' && session?.user) {
-        const s = await getSession(supabase)
-        if (s) {
-          setUser(s.user)
-          setRoles(s.roles)
+        setUser(session.user)
+        try {
+          const s = await getSession(supabase)
+          setRoles(s?.roles ?? [])
+        } catch (err) {
+          console.error('[ITCRMS] onAuthStateChange error:', err)
+          setRoles([])
         }
       } else if (event === 'SIGNED_OUT') {
         setUser(null)
