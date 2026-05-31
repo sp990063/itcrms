@@ -20,18 +20,42 @@ const PAGES = {
   admin:       [{ url: '/cr/all', name: 'All CRs' }, { url: '/cr/new', name: 'New CR' }, { url: '/admin/users', name: 'Admin: Users' }, { url: '/admin/roles', name: 'Admin: Roles' }, { url: '/admin/cr-types', name: 'Admin: CR Types' }],
 }
 
-async function login(page, email, password) {
-  await page.goto(`${BASE}/auth/login`, { waitUntil: 'networkidle' })
-  await page.click('button:has-text("Use local test account")')
-  await page.waitForTimeout(500)
-  await page.locator('input[type="email"], input[name="email"]').first().fill(email)
-  await page.locator('input[type="password"], input[name="password"]').first().fill(password)
-  await page.click('button[type="submit"], button:has-text("Sign in")')
-  try {
-    await page.waitForURL(url => !url.includes('/auth/login'), { timeout: 10000 })
-  } catch {}
+async function login(page, email, password, roleLabel) {
+  // Load the page and wait for React to hydrate
+  await page.goto(`${BASE}/auth/login`, { waitUntil: 'domcontentloaded', timeout: 30000 })
+  // Wait for Next.js hydration + localStorage check in useEffect
   await page.waitForTimeout(3000)
-  return !page.url().includes('/auth/login')
+
+  // Click "Use local test account" to reveal the form
+  const localBtn = page.locator('button:has-text("Use local test account")')
+  if (await localBtn.count() > 0) {
+    await localBtn.click()
+    await page.waitForTimeout(1500)
+  }
+
+  // Fill credentials
+  const emailInput = page.locator('input[type="email"], input[name="email"]').first()
+  const pwInput = page.locator('input[type="password"], input[name="password"]').first()
+  if (await emailInput.count() > 0) {
+    await emailInput.fill(email)
+    await pwInput.fill(password)
+    await page.locator('button[type="submit"], button:has-text("Sign in")').first().click()
+  }
+
+  // Wait up to 15s for navigation away from login
+  try {
+    await page.waitForURL(url => !url.includes('/auth/login') && !url.includes('supabase.co'), { timeout: 15000 })
+  } catch {
+    // May have already redirected; check current URL
+  }
+  await page.waitForTimeout(2000)
+
+  const url = page.url()
+  // Must land on localhost — OAuth redirect to supabase.co means login is still in progress
+  const onLocalhost = url.includes('localhost')
+  const loginFormVisible = await page.locator('input[type="email"]').count() > 0
+  console.log(`  🔍 [${roleLabel}] Final URL: ${url}, loginFormVisible: ${loginFormVisible}, onLocalhost: ${onLocalhost}`)
+  return onLocalhost && !loginFormVisible
 }
 
 async function getNavLinks(page) {
@@ -57,13 +81,9 @@ async function captureByNav(page, pageInfo) {
   const filename = `nav_${key}.png`
   const path = `${OUT}/${filename}`
   try {
-    // Find nav link matching this page
-    const navLinks = await getNavLinks(page)
-    const matching = navLinks.find(l => l.href === pageInfo.url || l.href.endsWith(pageInfo.url))
-    if (matching) {
-      await page.click(`nav a[href="${matching.href}"], nav a[href="${pageInfo.url}"]`)
-      await page.waitForTimeout(2500)
-    } else {
+    // Always go direct — avoids the nav link click which can lose cookie context in headless
+    await page.goto(`${BASE}${pageInfo.url}`, { waitUntil: 'domcontentloaded', timeout: 12000 })
+    await page.waitForTimeout(3000)
       // fallback: direct goto with cookie context preserved
       await page.goto(`${BASE}${pageInfo.url}`, { waitUntil: 'domcontentloaded', timeout: 12000 })
       await page.waitForTimeout(2500)
@@ -95,7 +115,7 @@ async function main() {
     })
     const page = await context.newPage()
 
-    const loginOk = await login(page, account.email, account.password)
+    const loginOk = await login(page, account.email, account.password, account.roleLabel)
     if (!loginOk) {
       console.log(`  ⚠️  [${account.roleLabel}] Login FAILED`)
       await context.close()

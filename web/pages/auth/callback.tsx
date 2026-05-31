@@ -16,7 +16,8 @@ const CallbackPage: NextPage = () => {
         return
       }
 
-      router.replace('/')
+      // Use window.location to force a full page reload so the server reads the session cookie
+      window.location.href = '/'
     }
 
     handleCallback()

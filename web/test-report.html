@@ -19,10 +19,6 @@
   td { border-bottom: 1px solid #eee; vertical-align: top; }
   tr:hover { background: #fafafa; }
   pre { font-family: 'Consolas', monospace; font-size: 10px; white-space: pre-wrap; word-break: break-word; }
-  .diagnosis { margin: 20px 40px; padding: 16px 20px; background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; font-size: 13px; }
-  .diagnosis h3 { margin: 0 0 8px; color: #856404; }
-  .diagnosis ul { margin: 0; padding-left: 20px; color: #856404; }
-  .diagnosis li { margin-bottom: 4px; }
 </style>
 </head>
 <body>
@@ -32,21 +28,10 @@
 </div>
 <div class="summary">
   <div class="summary-card"><div class="num">15</div><div class="label">Total Checks</div></div>
-  <div class="summary-card"><div class="num pass">5</div><div class="label">Form OK ✅</div></div>
-  <div class="summary-card"><div class="num fail">10</div><div class="label">Auth Failures ❌</div></div>
-  <div class="summary-card"><div class="num">33%</div><div class="label">Pass Rate</div></div>
+  <div class="summary-card"><div class="num pass">0</div><div class="label">Passed ✅</div></div>
+  <div class="summary-card"><div class="num fail">15</div><div class="label">Failed ❌</div></div>
+  <div class="summary-card"><div class="num">0%</div><div class="label">Pass Rate</div></div>
   <div class="summary-card"><div class="num">5</div><div class="label">Roles</div></div>
-</div>
-<div class="diagnosis">
-  <h3>🔍 Diagnosis — SSO Auth Session Drop on Client-Side Navigation</h3>
-  <ul>
-    <li>All 5 roles <strong>successfully authenticate</strong> (Supabase OAuth redirect succeeds → session established).</li>
-    <li><strong>Problem:</strong> After login, clicking nav links causes a redirect back to <code>/auth/login</code> — session cookie is lost on subsequent navigation.</li>
-    <li><strong>Root cause likely:</strong> Supabase cookie storage issue with <code>localhost:3001</code> — cookies not persisting across client-side route transitions, or Next.js middleware stripping auth cookies on non-OAuth routes.</li>
-    <li><strong>Evidence:</strong> <code>/cr/new</code> works for all roles (direct URL visit after login), but <code>/cr/my</code>, <code>/cr/all</code>, and all <code>/admin/*</code> pages fail with login redirect.</li>
-    <li><strong>OCR verified:</strong> 6 screenshots show "Submit New Change Request" form (PASS ✅). 19 screenshots show SSO login page (FAIL ❌).</li>
-    <li><strong>Impact:</strong> RBAC cannot be enforced — users see login screen on every protected page except <code>/cr/new</code>.</li>
-  </ul>
 </div>
 <table>
   <thead>
@@ -55,121 +40,120 @@
       <th style="width:130px">Page</th>
       <th style="width:160px">Status</th>
       <th style="width:120px">Screenshot</th>
-      <th>OCR Verification</th>
+      <th>DOM Verification (H1 / URL / Nav / Content)</th>
     </tr>
   </thead>
   <tbody>
 <tr>
       <td style="padding:6px 8px"><strong>👤 User</strong><br/><span style="font-size:11px;color:#666">user</span></td>
       <td style="padding:6px 8px;font-size:13px">My CRs</td>
-      <td style="padding:6px 8px;font-size:12px"><span style="color:red">❌ AUTH FAIL — redirect to login</span></td>
+      <td style="padding:6px 8px;font-size:12px"><span style="color:red">❌ FAIL — login redirect</span></td>
       <td style="padding:6px 8px"><a href="screenshots/nav__cr_my.png" target="_blank"><img src="screenshots/nav__cr_my.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td>
-      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>OCR:</strong> "Sign in with your organizational SSO account" (login page)<br/><strong>Root cause:</strong> Session lost after OAuth redirect; cookie not persisting on client nav</td>
+      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>URL:</strong> http://localhost:3001/auth/login<br/><strong>Nav:</strong> —<br/></td>
     </tr>
 <tr>
       <td style="padding:6px 8px"><strong>👤 User</strong><br/><span style="font-size:11px;color:#666">user</span></td>
       <td style="padding:6px 8px;font-size:13px">New CR</td>
-      <td style="padding:6px 8px;font-size:12px"><span style="color:green">✅ PASS — Form Loaded</span></td>
+      <td style="padding:6px 8px;font-size:12px"><span style="color:red">❌ FAIL — login redirect</span></td>
       <td style="padding:6px 8px"><a href="screenshots/nav__cr_new.png" target="_blank"><img src="screenshots/nav__cr_new.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td>
-      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>OCR:</strong> "Submit New Change Request", "CR Type *", "Title *", "Description *", "System Tier *", "Risk Level *", "Internet Facing System", "Cancel", "Submit CR" — all 17 form fields present</td>
+      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>URL:</strong> http://localhost:3001/auth/login<br/><strong>Nav:</strong> —<br/></td>
     </tr>
 <tr>
       <td style="padding:6px 8px"><strong>👔 Supervisor</strong><br/><span style="font-size:11px;color:#666">supervisor</span></td>
       <td style="padding:6px 8px;font-size:13px">My CRs</td>
-      <td style="padding:6px 8px;font-size:12px"><span style="color:red">❌ AUTH FAIL — redirect to login</span></td>
+      <td style="padding:6px 8px;font-size:12px"><span style="color:red">❌ FAIL — login redirect</span></td>
       <td style="padding:6px 8px"><a href="screenshots/nav__cr_my.png" target="_blank"><img src="screenshots/nav__cr_my.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td>
-      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>OCR:</strong> "Sign in with your organizational SSO account" (login page)</td>
+      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>URL:</strong> http://localhost:3001/auth/login<br/><strong>Nav:</strong> —<br/></td>
     </tr>
 <tr>
       <td style="padding:6px 8px"><strong>👔 Supervisor</strong><br/><span style="font-size:11px;color:#666">supervisor</span></td>
       <td style="padding:6px 8px;font-size:13px">New CR</td>
-      <td style="padding:6px 8px;font-size:12px"><span style="color:green">✅ PASS — Form Loaded</span></td>
+      <td style="padding:6px 8px;font-size:12px"><span style="color:red">❌ FAIL — login redirect</span></td>
       <td style="padding:6px 8px"><a href="screenshots/nav__cr_new.png" target="_blank"><img src="screenshots/nav__cr_new.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td>
-      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>OCR:</strong> Full "Submit New Change Request" form — 17 fields including "CR Type *", "Title *", "Description *", "System Tier *", "Risk Level *", "Cancel", "Submit CR"</td>
+      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>URL:</strong> http://localhost:3001/auth/login<br/><strong>Nav:</strong> —<br/></td>
     </tr>
 <tr>
       <td style="padding:6px 8px"><strong>💻 IT Staff</strong><br/><span style="font-size:11px;color:#666">it_staff</span></td>
       <td style="padding:6px 8px;font-size:13px">My CRs</td>
-      <td style="padding:6px 8px;font-size:12px"><span style="color:red">❌ AUTH FAIL — redirect to login</span></td>
+      <td style="padding:6px 8px;font-size:12px"><span style="color:red">❌ FAIL — login redirect</span></td>
       <td style="padding:6px 8px"><a href="screenshots/nav__cr_my.png" target="_blank"><img src="screenshots/nav__cr_my.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td>
-      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>OCR:</strong> "Sign in with your organizational SSO account" (login page)</td>
+      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>URL:</strong> http://localhost:3001/auth/login<br/><strong>Nav:</strong> —<br/></td>
     </tr>
 <tr>
       <td style="padding:6px 8px"><strong>💻 IT Staff</strong><br/><span style="font-size:11px;color:#666">it_staff</span></td>
       <td style="padding:6px 8px;font-size:13px">All CRs</td>
-      <td style="padding:6px 8px;font-size:12px"><span style="color:red">❌ AUTH FAIL — redirect to login</span></td>
+      <td style="padding:6px 8px;font-size:12px"><span style="color:red">❌ FAIL — login redirect</span></td>
       <td style="padding:6px 8px"><a href="screenshots/nav__cr_all.png" target="_blank"><img src="screenshots/nav__cr_all.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td>
-      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>OCR:</strong> "Sign in with your organizational SSO account" (login page)</td>
+      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>URL:</strong> http://localhost:3001/auth/login<br/><strong>Nav:</strong> —<br/></td>
     </tr>
 <tr>
       <td style="padding:6px 8px"><strong>💻 IT Staff</strong><br/><span style="font-size:11px;color:#666">it_staff</span></td>
       <td style="padding:6px 8px;font-size:13px">New CR</td>
-      <td style="padding:6px 8px;font-size:12px"><span style="color:green">✅ PASS — Form Loaded</span></td>
+      <td style="padding:6px 8px;font-size:12px"><span style="color:red">❌ FAIL — login redirect</span></td>
       <td style="padding:6px 8px"><a href="screenshots/nav__cr_new.png" target="_blank"><img src="screenshots/nav__cr_new.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td>
-      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>OCR:</strong> Full "Submit New Change Request" form — 17 fields</td>
+      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>URL:</strong> http://localhost:3001/auth/login<br/><strong>Nav:</strong> —<br/></td>
     </tr>
 <tr>
       <td style="padding:6px 8px"><strong>🎯 IT Director</strong><br/><span style="font-size:11px;color:#666">it_director</span></td>
       <td style="padding:6px 8px;font-size:13px">All CRs</td>
-      <td style="padding:6px 8px;font-size:12px"><span style="color:red">❌ AUTH FAIL — redirect to login</span></td>
+      <td style="padding:6px 8px;font-size:12px"><span style="color:red">❌ FAIL — login redirect</span></td>
       <td style="padding:6px 8px"><a href="screenshots/nav__cr_all.png" target="_blank"><img src="screenshots/nav__cr_all.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td>
-      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>OCR:</strong> "Sign in with your organizational SSO account" (login page)</td>
+      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>URL:</strong> http://localhost:3001/auth/login<br/><strong>Nav:</strong> —<br/></td>
     </tr>
 <tr>
       <td style="padding:6px 8px"><strong>🎯 IT Director</strong><br/><span style="font-size:11px;color:#666">it_director</span></td>
       <td style="padding:6px 8px;font-size:13px">New CR</td>
-      <td style="padding:6px 8px;font-size:12px"><span style="color:green">✅ PASS — Form Loaded</span></td>
+      <td style="padding:6px 8px;font-size:12px"><span style="color:red">❌ FAIL — login redirect</span></td>
       <td style="padding:6px 8px"><a href="screenshots/nav__cr_new.png" target="_blank"><img src="screenshots/nav__cr_new.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td>
-      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>OCR:</strong> Full "Submit New Change Request" form — 17 fields</td>
+      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>URL:</strong> http://localhost:3001/auth/login<br/><strong>Nav:</strong> —<br/></td>
     </tr>
 <tr>
       <td style="padding:6px 8px"><strong>🎯 IT Director</strong><br/><span style="font-size:11px;color:#666">it_director</span></td>
       <td style="padding:6px 8px;font-size:13px">Admin: Users</td>
-      <td style="padding:6px 8px;font-size:12px"><span style="color:red">❌ AUTH FAIL — redirect to login</span></td>
+      <td style="padding:6px 8px;font-size:12px"><span style="color:red">❌ FAIL — login redirect</span></td>
       <td style="padding:6px 8px"><a href="screenshots/nav__admin_users.png" target="_blank"><img src="screenshots/nav__admin_users.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td>
-      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>OCR:</strong> "Sign in with your organizational SSO account" (login page)</td>
+      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>URL:</strong> http://localhost:3001/auth/login<br/><strong>Nav:</strong> —<br/></td>
     </tr>
 <tr>
       <td style="padding:6px 8px"><strong>⚙️ Admin</strong><br/><span style="font-size:11px;color:#666">admin</span></td>
       <td style="padding:6px 8px;font-size:13px">All CRs</td>
-      <td style="padding:6px 8px;font-size:12px"><span style="color:red">❌ AUTH FAIL — redirect to login</span></td>
+      <td style="padding:6px 8px;font-size:12px"><span style="color:red">❌ FAIL — login redirect</span></td>
       <td style="padding:6px 8px"><a href="screenshots/nav__cr_all.png" target="_blank"><img src="screenshots/nav__cr_all.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td>
-      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>OCR:</strong> "Sign in with your organizational SSO account" (login page)</td>
+      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>URL:</strong> http://localhost:3001/auth/login<br/><strong>Nav:</strong> —<br/></td>
     </tr>
 <tr>
       <td style="padding:6px 8px"><strong>⚙️ Admin</strong><br/><span style="font-size:11px;color:#666">admin</span></td>
       <td style="padding:6px 8px;font-size:13px">New CR</td>
-      <td style="padding:6px 8px;font-size:12px"><span style="color:green">✅ PASS — Form Loaded</span></td>
+      <td style="padding:6px 8px;font-size:12px"><span style="color:red">❌ FAIL — login redirect</span></td>
       <td style="padding:6px 8px"><a href="screenshots/nav__cr_new.png" target="_blank"><img src="screenshots/nav__cr_new.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td>
-      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>OCR:</strong> Full "Submit New Change Request" form — 17 fields</td>
+      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>URL:</strong> http://localhost:3001/auth/login<br/><strong>Nav:</strong> —<br/></td>
     </tr>
 <tr>
       <td style="padding:6px 8px"><strong>⚙️ Admin</strong><br/><span style="font-size:11px;color:#666">admin</span></td>
       <td style="padding:6px 8px;font-size:13px">Admin: Users</td>
-      <td style="padding:6px 8px;font-size:12px"><span style="color:red">❌ AUTH FAIL — redirect to login</span></td>
+      <td style="padding:6px 8px;font-size:12px"><span style="color:red">❌ FAIL — login redirect</span></td>
       <td style="padding:6px 8px"><a href="screenshots/nav__admin_users.png" target="_blank"><img src="screenshots/nav__admin_users.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td>
-      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>OCR:</strong> "Sign in with your organizational SSO account" (login page)</td>
+      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>URL:</strong> http://localhost:3001/auth/login<br/><strong>Nav:</strong> —<br/></td>
     </tr>
 <tr>
       <td style="padding:6px 8px"><strong>⚙️ Admin</strong><br/><span style="font-size:11px;color:#666">admin</span></td>
       <td style="padding:6px 8px;font-size:13px">Admin: Roles</td>
-      <td style="padding:6px 8px;font-size:12px"><span style="color:red">❌ AUTH FAIL — redirect to login</span></td>
+      <td style="padding:6px 8px;font-size:12px"><span style="color:red">❌ FAIL — login redirect</span></td>
       <td style="padding:6px 8px"><a href="screenshots/nav__admin_roles.png" target="_blank"><img src="screenshots/nav__admin_roles.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td>
-      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>OCR:</strong> "Sign in with your organizational SSO account" (login page)</td>
+      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>URL:</strong> http://localhost:3001/auth/login<br/><strong>Nav:</strong> —<br/></td>
     </tr>
 <tr>
       <td style="padding:6px 8px"><strong>⚙️ Admin</strong><br/><span style="font-size:11px;color:#666">admin</span></td>
       <td style="padding:6px 8px;font-size:13px">Admin: CR Types</td>
-      <td style="padding:6px 8px;font-size:12px"><span style="color:red">❌ AUTH FAIL — redirect to login</span></td>
+      <td style="padding:6px 8px;font-size:12px"><span style="color:red">❌ FAIL — login redirect</span></td>
       <td style="padding:6px 8px"><a href="screenshots/nav__admin_cr-types.png" target="_blank"><img src="screenshots/nav__admin_cr-types.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td>
-      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>OCR:</strong> "Sign in with your organizational SSO account" (login page)</td>
+      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>URL:</strong> http://localhost:3001/auth/login<br/><strong>Nav:</strong> —<br/></td>
     </tr>
   </tbody>
 </table>
 <div style="padding:20px 40px;font-size:12px;color:#666;background:#f8f9fa;border-top:1px solid #e0e0e0">
-  <strong>OCR:</strong> Full OCR results in <code>ocr-results.json</code> (RapidOCR, local ONNX inference).<br/>
-  <strong>Capture script:</strong> <code>e2e-full-report.ts</code> — uses Playwright, authenticates via SSO OAuth, then navigates via client-side nav links.<br/>
-  <strong>Key finding:</strong> SSO auth works at login but session drops on subsequent client-side navigation. All 6 form screenshots (✅) show full CR submission form. All 19 non-form screenshots (❌) show SSO login page — session was lost before page content could render.
+  <strong>OCR:</strong> Full OCR results in <code>ocr-results.json</code> (RapidOCR, local ONNX inference).
+  Open <code>screenshots/</code> folder for individual PNGs. Test: 5 roles × pages via client-side nav.
 </div>
 </body>
 </html>

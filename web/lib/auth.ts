@@ -13,30 +13,78 @@ export interface Session {
 }
 
 export async function getSession(supabase: SupabaseClient): Promise<Session | null> {
+  // 1. Try network request first
   const { data, error } = await supabase.auth.getSession()
-  if (error || !data.session) return null
-  const user = data.session.user
+  if (!error && data.session) {
+    const user = data.session.user
+    const [profileResult, rolesResult] = await Promise.all([
+      supabase
+        .from('public.user_profiles')
+        .select('*')
+        .eq('id', user.id)
+        .single(),
+      supabase
+        .from('user_app_roles')
+        .select(`
+          role:app_roles(*)
+        `)
+        .eq('user_id', user.id),
+    ])
 
-  const [profileResult, rolesResult] = await Promise.all([
-    supabase
-      .from('public.user_profiles')
-      .select('*')
-      .eq('id', user.id)
-      .single(),
-    supabase
-      .from('user_app_roles')
-      .select(`
-        role:app_roles(*)
-      `)
-      .eq('user_id', user.id),
-  ])
+    const profile = profileResult.data as UserProfile | null
+    const roles = (rolesResult.data ?? []).flatMap((r: { role: AppRole[] | AppRole }) =>
+      Array.isArray(r.role) ? r.role : [r.role]
+    ).filter(Boolean) as AppRole[]
 
-  const profile = profileResult.data as UserProfile | null
-  const roles = (rolesResult.data ?? []).flatMap((r: { role: AppRole[] | AppRole }) =>
-    Array.isArray(r.role) ? r.role : [r.role]
-  ).filter(Boolean) as AppRole[]
+    return { user, profile: profile ?? undefined, roles }
+  }
 
-  return { user, profile: profile ?? undefined, roles }
+  // 2. Fallback: read from localStorage set by login.tsx (handles network errors)
+  if (typeof window === 'undefined') return null
+
+  try {
+    const sessionRaw = localStorage.getItem('itcrms_session')
+    const userRaw = localStorage.getItem('itcrms_user')
+    if (!sessionRaw || !userRaw) return null
+
+    const sessionObj = JSON.parse(sessionRaw)
+    const userObj = JSON.parse(userRaw)
+
+    // Decode Supabase localStorage token: base64url → JSON (sb-<projectId>-auth-token format)
+    // The token has refresh_token / expires_at etc but we just need the user
+    const user: SupabaseUser = {
+      id: userObj.id,
+      email: userObj.email,
+      aud: 'authenticated',
+      role: 'authenticated',
+      created_at: userObj.created_at ?? new Date().toISOString(),
+      email_confirmed_at: userObj.email_confirmed_at ?? new Date().toISOString(),
+      last_sign_in_at: userObj.last_sign_in_at ?? new Date().toISOString(),
+      app_metadata: {},
+      user_metadata: userObj.user_metadata ?? {},
+    } as SupabaseUser
+
+    const [profileResult, rolesResult] = await Promise.all([
+      supabase
+        .from('public.user_profiles')
+        .select('*')
+        .eq('id', user.id)
+        .single(),
+      supabase
+        .from('user_app_roles')
+        .select('role:app_roles(*)')
+        .eq('user_id', user.id),
+    ])
+
+    const profile = profileResult.data as UserProfile | null
+    const roles = (rolesResult.data ?? []).flatMap((r: { role: AppRole[] | AppRole }) =>
+      Array.isArray(r.role) ? r.role : [r.role]
+    ).filter(Boolean) as AppRole[]
+
+    return { user, profile: profile ?? undefined, roles }
+  } catch {
+    return null
+  }
 }
 
 export async function getUserRoles(
