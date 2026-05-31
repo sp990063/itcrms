@@ -1,0 +1,102 @@
+{
+  "admin__.png": {
+    "text": "[0.9951090812683105] ITCRMS\\n[0.9861023525396982] IT Service Change Request Management\\n[0.9993619322776794] System\\n[0.9752662562309428] Sign in with your organizational SsO account to\\n[0.9974213028565432] access the IT Change Request Management\\n[0.9993649125099182] System.\\n[0.9206273728295377] \u2192] Sign in with sso\\n[0.9876268722794272] Use local test account\\n[0.9905087118563445] Having trouble signing in? Contact IT Support.",
+    "line_count": 9
+  },
+  "admin__admin_cr-types.png": {
+    "text": "[0.9951090812683105] ITCRMS\\n[0.9861023525396982] IT Service Change Request Management\\n[0.9993619322776794] System\\n[0.9752662562309428] Sign in with your organizational SsO account to\\n[0.9974213028565432] access the IT Change Request Management\\n[0.9993649125099182] System.\\n[0.9206273728295377] \u2192] Sign in with sso\\n[0.9876268722794272] Use local test account\\n[0.9905087118563445] Having trouble signing in? Contact IT Support.",
+    "line_count": 9
+  },
+  "admin__admin_roles.png": {
+    "text": "[0.9951090812683105] ITCRMS\\n[0.9861023525396982] IT Service Change Request Management\\n[0.9993619322776794] System\\n[0.9752662562309428] Sign in with your organizational SsO account to\\n[0.9974213028565432] access the IT Change Request Management\\n[0.9993649125099182] System.\\n[0.9206273728295377] \u2192] Sign in with sso\\n[0.9876268722794272] Use local test account\\n[0.9905087118563445] Having trouble signing in? Contact IT Support.",
+    "line_count": 9
+  },
+  "admin__admin_users.png": {
+    "text": "[0.9951090812683105] ITCRMS\\n[0.9861023525396982] IT Service Change Request Management\\n[0.9993619322776794] System\\n[0.9752662562309428] Sign in with your organizational SsO account to\\n[0.9974213028565432] access the IT Change Request Management\\n[0.9993649125099182] System.\\n[0.9206273728295377] \u2192] Sign in with sso\\n[0.9876268722794272] Use local test account\\n[0.9905087118563445] Having trouble signing in? Contact IT Support.",
+    "line_count": 9
+  },
+  "admin__cr_all.png": {
+    "text": "[0.9951090812683105] ITCRMS\\n[0.9861023525396982] IT Service Change Request Management\\n[0.9993619322776794] System\\n[0.9752662562309428] Sign in with your organizational SsO account to\\n[0.9974213028565432] access the IT Change Request Management\\n[0.9993649125099182] System.\\n[0.9206273728295377] \u2192] Sign in with sso\\n[0.9876268722794272] Use local test account\\n[0.9905087118563445] Having trouble signing in? Contact IT Support.",
+    "line_count": 9
+  },
+  "admin__cr_new.png": {
+    "text": "[0.9907614588737488] Submit New Change Request\\n[0.9970230592621697] CR Type *\\n[0.9571697749197483] Select CR Type..\\n[0.9655244520732335] Title *\\n[0.9945333416645343] Brief description of the change request\\n[0.9981372117996216] 0/200\\n[0.9737869546963618] Description *\\n[0.9939268801523291] Detailed description of the proposed change...\\n[0.9986515045166016] 0/5000\\n[0.9708509215941796] System Tier *\\n[0.982453927397728] Risk Level *\\n[0.9560842284789453] Select Tier..\\n[0.8657783951078143] O High O Medium O Low\\n[0.9943596124649048] Internet Facing\\n[0.9988705317179362] System\\n[0.9989913006623586] Cancel\\n[0.9974653654628329] Submit CR",
+    "line_count": 17
+  },
+  "admin_admin_cr-types.png": {
+    "text": "[0.9951090812683105] ITCRMS\\n[0.9861023525396982] IT Service Change Request Management\\n[0.9993619322776794] System\\n[0.9752662562309428] Sign in with your organizational SsO account to\\n[0.9974213028565432] access the IT Change Request Management\\n[0.9993649125099182] System.\\n[0.9206273728295377] \u2192] Sign in with sso\\n[0.9876268722794272] Use local test account\\n[0.9905087118563445] Having trouble signing in? Contact IT Support.",
+    "line_count": 9
+  },
+  "admin_admin_roles.png": {
+    "text": "[0.9951090812683105] ITCRMS\\n[0.9861023525396982] IT Service Change Request Management\\n[0.9993619322776794] System\\n[0.9752662562309428] Sign in with your organizational SsO account to\\n[0.9974213028565432] access the IT Change Request Management\\n[0.9993649125099182] System.\\n[0.9206273728295377] \u2192] Sign in with sso\\n[0.9876268722794272] Use local test account\\n[0.9905087118563445] Having trouble signing in? Contact IT Support.",
+    "line_count": 9
+  },
+  "admin_admin_users.png": {
+    "text": "[0.9951090812683105] ITCRMS\\n[0.9861023525396982] IT Service Change Request Management\\n[0.9993619322776794] System\\n[0.9752662562309428] Sign in with your organizational SsO account to\\n[0.9974213028565432] access the IT Change Request Management\\n[0.9993649125099182] System.\\n[0.9206273728295377] \u2192] Sign in with sso\\n[0.9876268722794272] Use local test account\\n[0.9905087118563445] Having trouble signing in? Contact IT Support.",
+    "line_count": 9
+  },
+  "admin_cr_all.png": {
+    "text": "[0.9951090812683105] ITCRMS\\n[0.9861023525396982] IT Service Change Request Management\\n[0.9993619322776794] System\\n[0.9752662562309428] Sign in with your organizational SsO account to\\n[0.9974213028565432] access the IT Change Request Management\\n[0.9993649125099182] System.\\n[0.9206273728295377] \u2192] Sign in with sso\\n[0.9876268722794272] Use local test account\\n[0.9905087118563445] Having trouble signing in? Contact IT Support.",
+    "line_count": 9
+  },
+  "admin_cr_new.png": {
+    "text": "[0.9907614588737488] Submit New Change Request\\n[0.9970230592621697] CR Type *\\n[0.9571697749197483] Select CR Type..\\n[0.9655244520732335] Title *\\n[0.9945333416645343] Brief description of the change request\\n[0.9981372117996216] 0/200\\n[0.9737869546963618] Description *\\n[0.9939268801523291] Detailed description of the proposed change...\\n[0.9986515045166016] 0/5000\\n[0.9708509215941796] System Tier *\\n[0.982453927397728] Risk Level *\\n[0.9560842284789453] Select Tier..\\n[0.8657783951078143] O High O Medium O Low\\n[0.9943596124649048] Internet Facing\\n[0.9988705317179362] System\\n[0.9989913006623586] Cancel\\n[0.9974653654628329] Submit CR",
+    "line_count": 17
+  },
+  "it_director__.png": {
+    "text": "[0.9951090812683105] ITCRMS\\n[0.9861023525396982] IT Service Change Request Management\\n[0.9993619322776794] System\\n[0.9752662562309428] Sign in with your organizational SsO account to\\n[0.9974213028565432] access the IT Change Request Management\\n[0.9993649125099182] System.\\n[0.9206273728295377] \u2192] Sign in with sso\\n[0.9876268722794272] Use local test account\\n[0.9905087118563445] Having trouble signing in? Contact IT Support.",
+    "line_count": 9
+  },
+  "it_director__admin_users.png": {
+    "text": "[0.9951090812683105] ITCRMS\\n[0.9861023525396982] IT Service Change Request Management\\n[0.9993619322776794] System\\n[0.9752662562309428] Sign in with your organizational SsO account to\\n[0.9974213028565432] access the IT Change Request Management\\n[0.9993649125099182] System.\\n[0.9206273728295377] \u2192] Sign in with sso\\n[0.9876268722794272] Use local test account\\n[0.9905087118563445] Having trouble signing in? Contact IT Support.",
+    "line_count": 9
+  },
+  "it_director__cr_all.png": {
+    "text": "[0.9951090812683105] ITCRMS\\n[0.9861023525396982] IT Service Change Request Management\\n[0.9993619322776794] System\\n[0.9752662562309428] Sign in with your organizational SsO account to\\n[0.9974213028565432] access the IT Change Request Management\\n[0.9993649125099182] System.\\n[0.9206273728295377] \u2192] Sign in with sso\\n[0.9876268722794272] Use local test account\\n[0.9905087118563445] Having trouble signing in? Contact IT Support.",
+    "line_count": 9
+  },
+  "it_director__cr_new.png": {
+    "text": "[0.9907614588737488] Submit New Change Request\\n[0.9970230592621697] CR Type *\\n[0.9571697749197483] Select CR Type..\\n[0.9655244520732335] Title *\\n[0.9945333416645343] Brief description of the change request\\n[0.9981372117996216] 0/200\\n[0.9737869546963618] Description *\\n[0.9939268801523291] Detailed description of the proposed change...\\n[0.9986515045166016] 0/5000\\n[0.9708509215941796] System Tier *\\n[0.982453927397728] Risk Level *\\n[0.9560842284789453] Select Tier..\\n[0.8657783951078143] O High O Medium O Low\\n[0.9943596124649048] Internet Facing\\n[0.9988705317179362] System\\n[0.9989913006623586] Cancel\\n[0.9974653654628329] Submit CR",
+    "line_count": 17
+  },
+  "it_staff__.png": {
+    "text": "[0.9951090812683105] ITCRMS\\n[0.9861023525396982] IT Service Change Request Management\\n[0.9993619322776794] System\\n[0.9752662562309428] Sign in with your organizational SsO account to\\n[0.9974213028565432] access the IT Change Request Management\\n[0.9993649125099182] System.\\n[0.9206273728295377] \u2192] Sign in with sso\\n[0.9876268722794272] Use local test account\\n[0.9905087118563445] Having trouble signing in? Contact IT Support.",
+    "line_count": 9
+  },
+  "it_staff__cr_all.png": {
+    "text": "[0.9951090812683105] ITCRMS\\n[0.9861023525396982] IT Service Change Request Management\\n[0.9993619322776794] System\\n[0.9752662562309428] Sign in with your organizational SsO account to\\n[0.9974213028565432] access the IT Change Request Management\\n[0.9993649125099182] System.\\n[0.9206273728295377] \u2192] Sign in with sso\\n[0.9876268722794272] Use local test account\\n[0.9905087118563445] Having trouble signing in? Contact IT Support.",
+    "line_count": 9
+  },
+  "it_staff__cr_my.png": {
+    "text": "[0.9951090812683105] ITCRMS\\n[0.9861023525396982] IT Service Change Request Management\\n[0.9993619322776794] System\\n[0.9752662562309428] Sign in with your organizational SsO account to\\n[0.9974213028565432] access the IT Change Request Management\\n[0.9993649125099182] System.\\n[0.9206273728295377] \u2192] Sign in with sso\\n[0.9876268722794272] Use local test account\\n[0.9905087118563445] Having trouble signing in? Contact IT Support.",
+    "line_count": 9
+  },
+  "it_staff__cr_new.png": {
+    "text": "[0.9907614588737488] Submit New Change Request\\n[0.9970230592621697] CR Type *\\n[0.9571697749197483] Select CR Type..\\n[0.9655244520732335] Title *\\n[0.9945333416645343] Brief description of the change request\\n[0.9981372117996216] 0/200\\n[0.9737869546963618] Description *\\n[0.9939268801523291] Detailed description of the proposed change...\\n[0.9986515045166016] 0/5000\\n[0.9708509215941796] System Tier *\\n[0.982453927397728] Risk Level *\\n[0.9560842284789453] Select Tier..\\n[0.8657783951078143] O High O Medium O Low\\n[0.9943596124649048] Internet Facing\\n[0.9988705317179362] System\\n[0.9989913006623586] Cancel\\n[0.9974653654628329] Submit CR",
+    "line_count": 17
+  },
+  "supervisor__.png": {
+    "text": "[0.9951090812683105] ITCRMS\\n[0.9861023525396982] IT Service Change Request Management\\n[0.9993619322776794] System\\n[0.9752662562309428] Sign in with your organizational SsO account to\\n[0.9974213028565432] access the IT Change Request Management\\n[0.9993649125099182] System.\\n[0.9206273728295377] \u2192] Sign in with sso\\n[0.9876268722794272] Use local test account\\n[0.9905087118563445] Having trouble signing in? Contact IT Support.",
+    "line_count": 9
+  },
+  "supervisor__cr_my.png": {
+    "text": "[0.9951090812683105] ITCRMS\\n[0.9861023525396982] IT Service Change Request Management\\n[0.9993619322776794] System\\n[0.9752662562309428] Sign in with your organizational SsO account to\\n[0.9974213028565432] access the IT Change Request Management\\n[0.9993649125099182] System.\\n[0.9206273728295377] \u2192] Sign in with sso\\n[0.9876268722794272] Use local test account\\n[0.9905087118563445] Having trouble signing in? Contact IT Support.",
+    "line_count": 9
+  },
+  "supervisor__cr_new.png": {
+    "text": "[0.9907614588737488] Submit New Change Request\\n[0.9970230592621697] CR Type *\\n[0.9571697749197483] Select CR Type..\\n[0.9655244520732335] Title *\\n[0.9945333416645343] Brief description of the change request\\n[0.9981372117996216] 0/200\\n[0.9737869546963618] Description *\\n[0.9939268801523291] Detailed description of the proposed change...\\n[0.9986515045166016] 0/5000\\n[0.9708509215941796] System Tier *\\n[0.982453927397728] Risk Level *\\n[0.9560842284789453] Select Tier..\\n[0.8657783951078143] O High O Medium O Low\\n[0.9943596124649048] Internet Facing\\n[0.9988705317179362] System\\n[0.9989913006623586] Cancel\\n[0.9974653654628329] Submit CR",
+    "line_count": 17
+  },
+  "user__.png": {
+    "text": "[0.9951090812683105] ITCRMS\\n[0.9861023525396982] IT Service Change Request Management\\n[0.9993619322776794] System\\n[0.9752662562309428] Sign in with your organizational SsO account to\\n[0.9974213028565432] access the IT Change Request Management\\n[0.9993649125099182] System.\\n[0.9206273728295377] \u2192] Sign in with sso\\n[0.9876268722794272] Use local test account\\n[0.9905087118563445] Having trouble signing in? Contact IT Support.",
+    "line_count": 9
+  },
+  "user__cr_my.png": {
+    "text": "[0.9951090812683105] ITCRMS\\n[0.9861023525396982] IT Service Change Request Management\\n[0.9993619322776794] System\\n[0.9752662562309428] Sign in with your organizational SsO account to\\n[0.9974213028565432] access the IT Change Request Management\\n[0.9993649125099182] System.\\n[0.9206273728295377] \u2192] Sign in with sso\\n[0.9876268722794272] Use local test account\\n[0.9905087118563445] Having trouble signing in? Contact IT Support.",
+    "line_count": 9
+  },
+  "user__cr_new.png": {
+    "text": "[0.9907614588737488] Submit New Change Request\\n[0.9970230592621697] CR Type *\\n[0.9571697749197483] Select CR Type..\\n[0.9655244520732335] Title *\\n[0.9945333416645343] Brief description of the change request\\n[0.9981372117996216] 0/200\\n[0.9737869546963618] Description *\\n[0.9939268801523291] Detailed description of the proposed change...\\n[0.9986515045166016] 0/5000\\n[0.9708509215941796] System Tier *\\n[0.982453927397728] Risk Level *\\n[0.9560842284789453] Select Tier..\\n[0.8657783951078143] O High O Medium O Low\\n[0.9984955957957676] InternetFacing\\n[0.9988097051779429] System\\n[0.9989913006623586] Cancel\\n[0.9974653654628329] Submit CR\\n[0.8940334055158827] Compiling",
+    "line_count": 18
+  }
+}
