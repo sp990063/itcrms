@@ -16,6 +16,7 @@
     "react-dom": "19.2.4"
   },
   "devDependencies": {
+    "@playwright/test": "^1.60.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
@@ -23,6 +24,7 @@
     "@vitest/ui": "^4.1.7",
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
+    "playwright": "^1.60.0",
     "typescript": "^5",
     "vitest": "^4.1.7"
   }
