@@ -48,8 +48,9 @@ const LoginPage: NextPage = () => {
   }
 
   async function handleLocalLogin(e: React.FormEvent) {
-    console.log('[ITCRMS] handleLocalLogin called', { email, password, loading })
     e.preventDefault()
+    e.stopPropagation()
+    console.log('[ITCRMS] handleLocalLogin called', { email, password, loading })
     setLoading(true)
     setError('')
 
