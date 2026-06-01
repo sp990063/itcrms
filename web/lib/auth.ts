@@ -31,7 +31,8 @@ export async function getSession(supabase: SupabaseClient): Promise<Session | nu
         .eq('user_id', user.id),
     ])
 
-    const profile = profileResult.data as UserProfile | null
+    // profile may be null if RLS blocks access or record doesn't exist — treat 404 as null
+    const profile = (profileResult.data && !profileResult.error) ? profileResult.data as UserProfile : null
     const roles = (rolesResult.data ?? []).flatMap((r: { role: AppRole[] | AppRole }) =>
       Array.isArray(r.role) ? r.role : [r.role]
     ).filter(Boolean) as AppRole[]
@@ -76,7 +77,8 @@ export async function getSession(supabase: SupabaseClient): Promise<Session | nu
         .eq('user_id', user.id),
     ])
 
-    const profile = profileResult.data as UserProfile | null
+    // profile may be null if RLS blocks access or record doesn't exist — treat 404 as null
+    const profile = (profileResult.data && !profileResult.error) ? profileResult.data as UserProfile : null
     const roles = (rolesResult.data ?? []).flatMap((r: { role: AppRole[] | AppRole }) =>
       Array.isArray(r.role) ? r.role : [r.role]
     ).filter(Boolean) as AppRole[]

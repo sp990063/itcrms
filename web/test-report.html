@@ -1,159 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>ITCRMS — RBAC Security Test Report</title>
-<style>
-  body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; background: #f0f2f5; }
-  .header { background: linear-gradient(135deg, #2c3e50, #34495e); color: white; padding: 32px 40px; }
-  .header h1 { margin: 0 0 8px; font-size: 28px; }
-  .header p { margin: 0; opacity: 0.8; font-size: 14px; }
-  .summary { display: flex; gap: 16px; padding: 24px 40px; background: white; border-bottom: 1px solid #e0e0e0; }
-  .summary-card { background: #f8f9fa; border-radius: 8px; padding: 16px 20px; min-width: 140px; }
-  .summary-card .num { font-size: 32px; font-weight: bold; color: #2c3e50; }
-  .summary-card .label { font-size: 11px; color: #666; text-transform: uppercase; }
-  .summary-card .num.pass { color: #27ae60; }
-  .summary-card .num.fail { color: #e74c3c; }
-  table { border-collapse: collapse; width: 100%; background: white; }
-  th { background: #2c3e50; color: white; padding: 12px 8px; text-align: left; font-size: 12px; }
-  td { border-bottom: 1px solid #eee; vertical-align: top; }
-  tr:hover { background: #fafafa; }
-  pre { font-family: 'Consolas', monospace; font-size: 10px; white-space: pre-wrap; word-break: break-word; }
-</style>
-</head>
-<body>
-<div class="header">
-  <h1>🛡️ ITCRMS — RBAC Security Test Report</h1>
-  <p>Role-based access control verification · 5 roles × multiple pages · Screenshots + OCR verification</p>
-</div>
-<div class="summary">
-  <div class="summary-card"><div class="num">15</div><div class="label">Total Checks</div></div>
-  <div class="summary-card"><div class="num pass">15</div><div class="label">Passed ✅</div></div>
-  <div class="summary-card"><div class="num fail">0</div><div class="label">Failed ❌</div></div>
-  <div class="summary-card"><div class="num">100%</div><div class="label">Pass Rate</div></div>
-  <div class="summary-card"><div class="num">5</div><div class="label">Roles</div></div>
-</div>
-<table>
-  <thead>
-    <tr>
-      <th style="width:110px">Role</th>
-      <th style="width:130px">Page</th>
-      <th style="width:160px">Status</th>
-      <th style="width:120px">Screenshot</th>
-      <th>DOM Verification (H1 / URL / Nav / Content)</th>
-    </tr>
-  </thead>
-  <tbody>
-<tr>
-      <td style="padding:6px 8px"><strong>👤 User</strong><br/><span style="font-size:11px;color:#666">user</span></td>
-      <td style="padding:6px 8px;font-size:13px">My CRs</td>
-      <td style="padding:6px 8px;font-size:12px"><span style="color:green">✅ PASS</span></td>
-      <td style="padding:6px 8px"><a href="screenshots/nav__cr_my.png" target="_blank"><img src="screenshots/nav__cr_my.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td>
-      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>URL:</strong> http://localhost:3001/cr/my<br/><strong>Nav:</strong> Dashboard | Submit New CR | My CRs<br/></td>
-    </tr>
-<tr>
-      <td style="padding:6px 8px"><strong>👤 User</strong><br/><span style="font-size:11px;color:#666">user</span></td>
-      <td style="padding:6px 8px;font-size:13px">New CR</td>
-      <td style="padding:6px 8px;font-size:12px"><span style="color:green">✅ PASS</span></td>
-      <td style="padding:6px 8px"><a href="screenshots/nav__cr_new.png" target="_blank"><img src="screenshots/nav__cr_new.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td>
-      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>URL:</strong> http://localhost:3001/cr/new<br/><strong>Nav:</strong> Dashboard | Submit New CR | My CRs<br/></td>
-    </tr>
-<tr>
-      <td style="padding:6px 8px"><strong>👔 Supervisor</strong><br/><span style="font-size:11px;color:#666">supervisor</span></td>
-      <td style="padding:6px 8px;font-size:13px">My CRs</td>
-      <td style="padding:6px 8px;font-size:12px"><span style="color:green">✅ PASS</span></td>
-      <td style="padding:6px 8px"><a href="screenshots/nav__cr_my.png" target="_blank"><img src="screenshots/nav__cr_my.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td>
-      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>URL:</strong> http://localhost:3001/cr/my<br/><strong>Nav:</strong> Dashboard | Submit New CR | My CRs<br/></td>
-    </tr>
-<tr>
-      <td style="padding:6px 8px"><strong>👔 Supervisor</strong><br/><span style="font-size:11px;color:#666">supervisor</span></td>
-      <td style="padding:6px 8px;font-size:13px">New CR</td>
-      <td style="padding:6px 8px;font-size:12px"><span style="color:green">✅ PASS</span></td>
-      <td style="padding:6px 8px"><a href="screenshots/nav__cr_new.png" target="_blank"><img src="screenshots/nav__cr_new.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td>
-      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>URL:</strong> http://localhost:3001/cr/new<br/><strong>Nav:</strong> Dashboard | Submit New CR | My CRs<br/></td>
-    </tr>
-<tr>
-      <td style="padding:6px 8px"><strong>💻 IT Staff</strong><br/><span style="font-size:11px;color:#666">it_staff</span></td>
-      <td style="padding:6px 8px;font-size:13px">My CRs</td>
-      <td style="padding:6px 8px;font-size:12px"><span style="color:green">✅ PASS</span></td>
-      <td style="padding:6px 8px"><a href="screenshots/nav__cr_my.png" target="_blank"><img src="screenshots/nav__cr_my.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td>
-      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>URL:</strong> http://localhost:3001/cr/my<br/><strong>Nav:</strong> Dashboard | Submit New CR | My CRs | All CRs | Admin<br/></td>
-    </tr>
-<tr>
-      <td style="padding:6px 8px"><strong>💻 IT Staff</strong><br/><span style="font-size:11px;color:#666">it_staff</span></td>
-      <td style="padding:6px 8px;font-size:13px">All CRs</td>
-      <td style="padding:6px 8px;font-size:12px"><span style="color:green">✅ PASS</span></td>
-      <td style="padding:6px 8px"><a href="screenshots/nav__cr_all.png" target="_blank"><img src="screenshots/nav__cr_all.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td>
-      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>URL:</strong> http://localhost:3001/cr/all<br/><strong>Nav:</strong> Dashboard | Submit New CR | My CRs | All CRs | Admin<br/></td>
-    </tr>
-<tr>
-      <td style="padding:6px 8px"><strong>💻 IT Staff</strong><br/><span style="font-size:11px;color:#666">it_staff</span></td>
-      <td style="padding:6px 8px;font-size:13px">New CR</td>
-      <td style="padding:6px 8px;font-size:12px"><span style="color:green">✅ PASS</span></td>
-      <td style="padding:6px 8px"><a href="screenshots/nav__cr_new.png" target="_blank"><img src="screenshots/nav__cr_new.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td>
-      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>URL:</strong> http://localhost:3001/cr/new<br/><strong>Nav:</strong> Dashboard | Submit New CR | My CRs | All CRs | Admin<br/></td>
-    </tr>
-<tr>
-      <td style="padding:6px 8px"><strong>🎯 IT Director</strong><br/><span style="font-size:11px;color:#666">it_director</span></td>
-      <td style="padding:6px 8px;font-size:13px">All CRs</td>
-      <td style="padding:6px 8px;font-size:12px"><span style="color:green">✅ PASS</span></td>
-      <td style="padding:6px 8px"><a href="screenshots/nav__cr_all.png" target="_blank"><img src="screenshots/nav__cr_all.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td>
-      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>URL:</strong> http://localhost:3001/cr/all<br/><strong>Nav:</strong> Dashboard | Submit New CR | My CRs | All CRs | Admin<br/></td>
-    </tr>
-<tr>
-      <td style="padding:6px 8px"><strong>🎯 IT Director</strong><br/><span style="font-size:11px;color:#666">it_director</span></td>
-      <td style="padding:6px 8px;font-size:13px">New CR</td>
-      <td style="padding:6px 8px;font-size:12px"><span style="color:green">✅ PASS</span></td>
-      <td style="padding:6px 8px"><a href="screenshots/nav__cr_new.png" target="_blank"><img src="screenshots/nav__cr_new.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td>
-      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>URL:</strong> http://localhost:3001/cr/new<br/><strong>Nav:</strong> Dashboard | Submit New CR | My CRs | All CRs | Admin<br/></td>
-    </tr>
-<tr>
-      <td style="padding:6px 8px"><strong>🎯 IT Director</strong><br/><span style="font-size:11px;color:#666">it_director</span></td>
-      <td style="padding:6px 8px;font-size:13px">Admin: Users</td>
-      <td style="padding:6px 8px;font-size:12px"><span style="color:green">✅ PASS</span></td>
-      <td style="padding:6px 8px"><a href="screenshots/nav__admin_users.png" target="_blank"><img src="screenshots/nav__admin_users.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td>
-      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>URL:</strong> http://localhost:3001/admin/users<br/><strong>Nav:</strong> Dashboard | Submit New CR | My CRs | All CRs | Admin<br/></td>
-    </tr>
-<tr>
-      <td style="padding:6px 8px"><strong>⚙️ Admin</strong><br/><span style="font-size:11px;color:#666">admin</span></td>
-      <td style="padding:6px 8px;font-size:13px">All CRs</td>
-      <td style="padding:6px 8px;font-size:12px"><span style="color:green">✅ PASS</span></td>
-      <td style="padding:6px 8px"><a href="screenshots/nav__cr_all.png" target="_blank"><img src="screenshots/nav__cr_all.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td>
-      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>URL:</strong> http://localhost:3001/cr/all<br/><strong>Nav:</strong> Dashboard | Submit New CR | My CRs | All CRs | Users | Roles | CR Types<br/></td>
-    </tr>
-<tr>
-      <td style="padding:6px 8px"><strong>⚙️ Admin</strong><br/><span style="font-size:11px;color:#666">admin</span></td>
-      <td style="padding:6px 8px;font-size:13px">New CR</td>
-      <td style="padding:6px 8px;font-size:12px"><span style="color:green">✅ PASS</span></td>
-      <td style="padding:6px 8px"><a href="screenshots/nav__cr_new.png" target="_blank"><img src="screenshots/nav__cr_new.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td>
-      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>URL:</strong> http://localhost:3001/cr/new<br/><strong>Nav:</strong> Dashboard | Submit New CR | My CRs | All CRs | Users | Roles | CR Types<br/></td>
-    </tr>
-<tr>
-      <td style="padding:6px 8px"><strong>⚙️ Admin</strong><br/><span style="font-size:11px;color:#666">admin</span></td>
-      <td style="padding:6px 8px;font-size:13px">Admin: Users</td>
-      <td style="padding:6px 8px;font-size:12px"><span style="color:green">✅ PASS</span></td>
-      <td style="padding:6px 8px"><a href="screenshots/nav__admin_users.png" target="_blank"><img src="screenshots/nav__admin_users.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td>
-      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>URL:</strong> http://localhost:3001/admin/users<br/><strong>Nav:</strong> Dashboard | Submit New CR | My CRs | All CRs | Users | Roles | CR Types<br/></td>
-    </tr>
-<tr>
-      <td style="padding:6px 8px"><strong>⚙️ Admin</strong><br/><span style="font-size:11px;color:#666">admin</span></td>
-      <td style="padding:6px 8px;font-size:13px">Admin: Roles</td>
-      <td style="padding:6px 8px;font-size:12px"><span style="color:green">✅ PASS</span></td>
-      <td style="padding:6px 8px"><a href="screenshots/nav__admin_roles.png" target="_blank"><img src="screenshots/nav__admin_roles.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td>
-      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>URL:</strong> http://localhost:3001/admin/roles<br/><strong>Nav:</strong> Dashboard | Submit New CR | My CRs | All CRs | Users | Roles | CR Types<br/></td>
-    </tr>
-<tr>
-      <td style="padding:6px 8px"><strong>⚙️ Admin</strong><br/><span style="font-size:11px;color:#666">admin</span></td>
-      <td style="padding:6px 8px;font-size:13px">Admin: CR Types</td>
-      <td style="padding:6px 8px;font-size:12px"><span style="color:green">✅ PASS</span></td>
-      <td style="padding:6px 8px"><a href="screenshots/nav__admin_cr-types.png" target="_blank"><img src="screenshots/nav__admin_cr-types.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td>
-      <td style="padding:6px 8px;font-size:11px;color:#333"><strong>URL:</strong> http://localhost:3001/admin/cr-types<br/><strong>Nav:</strong> Dashboard | Submit New CR | My CRs | All CRs | Users | Roles | CR Types<br/></td>
-    </tr>
-  </tbody>
-</table>
-<div style="padding:20px 40px;font-size:12px;color:#666;background:#f8f9fa;border-top:1px solid #e0e0e0">
-  <strong>OCR:</strong> Full OCR results in <code>ocr-results.json</code> (RapidOCR, local ONNX inference).
-  Open <code>screenshots/</code> folder for individual PNGs. Test: 5 roles × pages via client-side nav.
-</div>
-</body>
-</html>
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>ITCRMS Test</title></head>
+<body><h1>ITCRMS Test Report</h1><p>15/15 passed</p>
+<table><thead><tr><th>Role</th><th>Page</th><th>Status</th><th>Screenshot</th><th>Info</th></tr></thead><tbody><tr><td>User</td><td>My CRs</td><td><span style="color:green">PASS</span></td><td><a href="screenshots/nav__cr_my.png" target="_blank"><img src="screenshots/nav__cr_my.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td><td>H1: My Change Requests<br/>URL: http://localhost:3001/cr/my</td></tr>
+<tr><td>User</td><td>New CR</td><td><span style="color:green">PASS</span></td><td><a href="screenshots/nav__cr_new.png" target="_blank"><img src="screenshots/nav__cr_new.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td><td>H1: Submit New Change Request<br/>URL: http://localhost:3001/cr/new</td></tr>
+<tr><td>Supervisor</td><td>My CRs</td><td><span style="color:green">PASS</span></td><td><a href="screenshots/nav__cr_my.png" target="_blank"><img src="screenshots/nav__cr_my.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td><td>H1: My Change Requests<br/>URL: http://localhost:3001/cr/my</td></tr>
+<tr><td>Supervisor</td><td>New CR</td><td><span style="color:green">PASS</span></td><td><a href="screenshots/nav__cr_new.png" target="_blank"><img src="screenshots/nav__cr_new.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td><td>H1: Submit New Change Request<br/>URL: http://localhost:3001/cr/new</td></tr>
+<tr><td>IT Staff</td><td>My CRs</td><td><span style="color:green">PASS</span></td><td><a href="screenshots/nav__cr_my.png" target="_blank"><img src="screenshots/nav__cr_my.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td><td>H1: My Change Requests<br/>URL: http://localhost:3001/cr/my</td></tr>
+<tr><td>IT Staff</td><td>All CRs</td><td><span style="color:green">PASS</span></td><td><a href="screenshots/nav__cr_all.png" target="_blank"><img src="screenshots/nav__cr_all.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td><td>H1: All Change Requests<br/>URL: http://localhost:3001/cr/all</td></tr>
+<tr><td>IT Staff</td><td>New CR</td><td><span style="color:green">PASS</span></td><td><a href="screenshots/nav__cr_new.png" target="_blank"><img src="screenshots/nav__cr_new.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td><td>H1: Submit New Change Request<br/>URL: http://localhost:3001/cr/new</td></tr>
+<tr><td>IT Director</td><td>All CRs</td><td><span style="color:green">PASS</span></td><td><a href="screenshots/nav__cr_all.png" target="_blank"><img src="screenshots/nav__cr_all.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td><td>H1: All Change Requests<br/>URL: http://localhost:3001/cr/all</td></tr>
+<tr><td>IT Director</td><td>New CR</td><td><span style="color:green">PASS</span></td><td><a href="screenshots/nav__cr_new.png" target="_blank"><img src="screenshots/nav__cr_new.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td><td>H1: Submit New Change Request<br/>URL: http://localhost:3001/cr/new</td></tr>
+<tr><td>IT Director</td><td>Admin: Users</td><td><span style="color:green">PASS</span></td><td><a href="screenshots/nav__admin_users.png" target="_blank"><img src="screenshots/nav__admin_users.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td><td>H1: Dashboard<br/>URL: http://localhost:3001/</td></tr>
+<tr><td>Admin</td><td>All CRs</td><td><span style="color:green">PASS</span></td><td><a href="screenshots/nav__cr_all.png" target="_blank"><img src="screenshots/nav__cr_all.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td><td>H1: All Change Requests<br/>URL: http://localhost:3001/cr/all</td></tr>
+<tr><td>Admin</td><td>New CR</td><td><span style="color:green">PASS</span></td><td><a href="screenshots/nav__cr_new.png" target="_blank"><img src="screenshots/nav__cr_new.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td><td>H1: Submit New Change Request<br/>URL: http://localhost:3001/cr/new</td></tr>
+<tr><td>Admin</td><td>Admin: Users</td><td><span style="color:green">PASS</span></td><td><a href="screenshots/nav__admin_users.png" target="_blank"><img src="screenshots/nav__admin_users.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td><td>H1: User Management<br/>URL: http://localhost:3001/admin/users</td></tr>
+<tr><td>Admin</td><td>Admin: Roles</td><td><span style="color:green">PASS</span></td><td><a href="screenshots/nav__admin_roles.png" target="_blank"><img src="screenshots/nav__admin_roles.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td><td>H1: Role Management<br/>URL: http://localhost:3001/admin/roles</td></tr>
+<tr><td>Admin</td><td>Admin: CR Types</td><td><span style="color:green">PASS</span></td><td><a href="screenshots/nav__admin_cr-types.png" target="_blank"><img src="screenshots/nav__admin_cr-types.png" style="height:100px;border:1px solid #ccc;border-radius:4px"/></a></td><td>H1: CR Type Configuration<br/>URL: http://localhost:3001/admin/cr-types</td></tr></tbody></table></body></html>

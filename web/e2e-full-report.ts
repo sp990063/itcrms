@@ -87,14 +87,13 @@ async function captureByNav(page, pageInfo) {
   const filename = `nav_${key}.png`
   const path = `${OUT}/${filename}`
   try {
-    try {
-      await page.goto(`${BASE}${pageInfo.url}`, { waitUntil: 'domcontentloaded', timeout: 12000 })
-      await page.waitForTimeout(3000)
-    } catch {
-      // fallback: direct goto with cookie context preserved
-      await page.goto(`${BASE}${pageInfo.url}`, { waitUntil: 'domcontentloaded', timeout: 12000 })
-      await page.waitForTimeout(2500)
-    }
+    // Use client-side nav (click nav link) instead of page.goto()
+    // page.goto() triggers a full HTTP request which causes Next.js dev server
+    // HMR to crash with TypeError: Cannot read properties of undefined (reading 'components')
+    // when it sends the isrManifest HMR message — leaving the page rendering a blank spinner.
+    // Clicking the nav link uses Next.js client-side routing which preserves the React context.
+    await page.click(`nav a[href="${pageInfo.url}"]`)
+    await page.waitForTimeout(4000)
     await page.screenshot({ path, fullPage: true })
     const state = await getPageState(page)
     return {
